@@ -8,14 +8,14 @@ from json import dumps
 app = FastAPI()
 
 @app.get("/")
-def get_json(ID:str ,PW:str):
+def get_json(id: str,pw: str):
     loc = {'동아리실A':'14676',
            '동아리실B':'14677',
            '회의실A':'14678',
            '회의실B':'49497'}
     try:
         week_index, day_index = get_index()
-        list_data = get_tableList(ID,PW,week_index,day_index,loc)
+        list_data = get_tableList(id,pw,week_index,day_index,loc)
     except HTTPException as e:
         raise HTTPException(status_code=500,detail=str(e))
     

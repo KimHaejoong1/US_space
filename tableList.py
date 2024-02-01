@@ -37,16 +37,17 @@ def get_tableList(ID,PW,week,day,space):
         except NoSuchElementException:
             table_list = None
 
-        print(room)
+        print(room,end="\n\n")
 
         if table_list is not None:
+            #예약이 있을때
             lis_count = len(table_list.find_elements(By.TAG_NAME, 'li'))
-            print(f'count : {lis_count}')
 
             for i in range(lis_count):
                 t = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="timeTableList"]')))
                 li = WebDriverWait(t, 10).until(EC.presence_of_all_elements_located((By.TAG_NAME, 'li')))[i]
 
+                #리스트 클릭
                 WebDriverWait(li, 10).until(EC.element_to_be_clickable((By.TAG_NAME, 'a'))).click()
                 WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="layer_planner"]/table')))
                 sleep(1) #사이트의 팝업에 있는 문제 우회
@@ -68,13 +69,17 @@ def get_tableList(ID,PW,week,day,space):
                 meeting_info_list.append(meeting_info)
     
                 li.find_element(By.XPATH,'//*[@id="layer_planner"]/button').click()
-            else:
-                meeting_info = {
-                    "name" : room,
-                    "title" : '0',
-                    "time" : '0',
-                    "content" : '0'
-                }
+        else:
+            #예약이 없을 때
+            print('no data')
+            print('\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n')
+            meeting_info = {
+                "name" : room,
+                "title" : '0',
+                "time" : '0',
+                "content" : '0'
+            }
+            meeting_info_list.append(meeting_info)
 
     return meeting_info_list
 
