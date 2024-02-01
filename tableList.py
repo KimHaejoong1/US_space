@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from time import sleep
+import re
 
 def get_tableList(ID,PW,week,day,space):
     meeting_info_list = []
@@ -48,13 +49,21 @@ def get_tableList(ID,PW,week,day,space):
                 li = WebDriverWait(t, 10).until(EC.presence_of_all_elements_located((By.TAG_NAME, 'li')))[i]
 
                 #리스트 클릭
-                WebDriverWait(li, 10).until(EC.element_to_be_clickable((By.TAG_NAME, 'a'))).click()
+                detail_list = WebDriverWait(li, 10).until(EC.element_to_be_clickable((By.TAG_NAME, 'a')))
+                onclick_attribute = detail_list.get_attribute("onclick")
+                match = re.search(r'\d+', onclick_attribute)
+                if match:
+                    liOrder = match.group()
+                
+                detail_list.click()
                 WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="layer_planner"]/table')))
                 sleep(1) #사이트의 팝업에 있는 문제 우회
 
                 liTitle   = driver.find_element(By.XPATH,'//*[@id="layer_planner"]/table/tbody/tr[1]/td').text
                 liTime    = driver.find_element(By.XPATH,'//*[@id="layer_planner"]/table/tbody/tr[2]/td').text
                 liContent = driver.find_element(By.XPATH,'//*[@id="layer_planner"]/table/tbody/tr[3]/td').text
+
+                print(f'Order\t: {liOrder}')
                 print(f'Title\t: {liTitle}')
                 print(f'Time\t: {liTime}')
                 print(f'Content\t: {liContent}')
@@ -62,6 +71,7 @@ def get_tableList(ID,PW,week,day,space):
 
                 meeting_info = {
                     "name" : room,
+                    "order" : liOrder,
                     "title" : liTitle,
                     "time" : liTime,
                     "content" : liContent
@@ -75,6 +85,7 @@ def get_tableList(ID,PW,week,day,space):
             print('\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n')
             meeting_info = {
                 "name" : room,
+                "order" : '0',
                 "title" : '0',
                 "time" : '0',
                 "content" : '0'
