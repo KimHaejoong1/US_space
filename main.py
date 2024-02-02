@@ -19,9 +19,7 @@ def get_json(id: str,pw: str):
     except HTTPException as e:
         raise HTTPException(status_code=500,detail=str(e))
     
-    json_data = jsonable_encoder(list_data)
-    data = dumps(json_data,indent=4,ensure_ascii=False)
-    return JSONResponse(content=data,media_type='application/json')
+    return list_data
 
 if __name__ == '__main__':
     loc = {'동아리실A':'14676',
