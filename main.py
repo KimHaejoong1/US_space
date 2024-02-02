@@ -1,11 +1,18 @@
 from tableList import get_tableList
 from cal import get_index
 from fastapi import FastAPI, HTTPException
-from fastapi.encoders import jsonable_encoder
-from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from json import dumps
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 모든 도메인에서의 접근을 허용합니다. 실제 운영 환경에서는 필요한 도메인만 명시하세요.
+    allow_credentials=True,
+    allow_methods=["*"],  # 모든 HTTP 메소드를 허용합니다.
+    allow_headers=["*"],  # 모든 HTTP 헤더를 허용합니다.
+)
 
 @app.get("/")
 def get_json(id: str,pw: str):
