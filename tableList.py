@@ -73,7 +73,8 @@ def get_tableList(ID,PW,week,day,space):
                     "name" : room,
                     "order" : liOrder,
                     "title" : liTitle,
-                    "time" : liTime,
+                    "startTime" : int(liTime[:2]),
+                    "endTime" : int(liTime[8:10]),
                     "content" : liContent
                 }
                 meeting_info_list.append(meeting_info)
@@ -85,10 +86,11 @@ def get_tableList(ID,PW,week,day,space):
             print('\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n')
             meeting_info = {
                 "name" : room,
-                "order" : '0',
-                "title" : '0',
-                "time" : '0',
-                "content" : '0'
+                "order" : 0,
+                "title" : 0,
+                "startTime" : 0,
+                "endTime" : 0,
+                "content" : 0
             }
             meeting_info_list.append(meeting_info)
 
