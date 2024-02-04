@@ -65,8 +65,8 @@ def get_tableList(ID,PW,week,day,space):
                     "name" : room,
                     "order" : liOrder,
                     "title" : driver.find_element(By.XPATH,'//*[@id="layer_planner"]/table/tbody/tr[1]/td').text,
-                    "startTime" : int(liTime[:5]),
-                    "endTime" : int(liTime[8:]),
+                    "startTime" : liTime[:5],
+                    "endTime" : liTime[8:],
                     "content" : driver.find_element(By.XPATH,'//*[@id="layer_planner"]/table/tbody/tr[3]/td').text
                 }
                 meeting_info_list.append(meeting_info)
