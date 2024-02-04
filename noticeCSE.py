@@ -23,9 +23,8 @@ def get_CSE_notice():
 
         #필터링된 공지사항 처리
         for content in filtered_rows:
-            title = content.find('strong').get_text()
             notice = {
-                "title" : title,
+                "title" : content.find('strong').get_text(),
                 "new" : bool(content.find(class_='newArtcl'))
             }
             notice_data.append(notice)
