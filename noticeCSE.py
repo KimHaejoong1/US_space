@@ -1,7 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-from json import dumps
-
 
 def get_CSE_notice():
     #학과 공지사항 파싱
