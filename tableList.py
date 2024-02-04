@@ -59,31 +59,21 @@ def get_tableList(ID,PW,week,day,space):
                 WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="layer_planner"]/table')))
                 sleep(1) #사이트의 팝업에 있는 문제 우회
 
-                liTitle   = driver.find_element(By.XPATH,'//*[@id="layer_planner"]/table/tbody/tr[1]/td').text
                 liTime    = driver.find_element(By.XPATH,'//*[@id="layer_planner"]/table/tbody/tr[2]/td').text
-                liContent = driver.find_element(By.XPATH,'//*[@id="layer_planner"]/table/tbody/tr[3]/td').text
-
-                print(f'Order\t: {liOrder}')
-                print(f'Title\t: {liTitle}')
-                print(f'Time\t: {liTime}')
-                print(f'Content\t: {liContent}')
-                print('\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n')
 
                 meeting_info = {
                     "name" : room,
                     "order" : liOrder,
-                    "title" : liTitle,
-                    "startTime" : int(liTime[:2]),
-                    "endTime" : int(liTime[8:10]),
-                    "content" : liContent
+                    "title" : driver.find_element(By.XPATH,'//*[@id="layer_planner"]/table/tbody/tr[1]/td').text,
+                    "startTime" : int(liTime[:5]),
+                    "endTime" : int(liTime[8:]),
+                    "content" : driver.find_element(By.XPATH,'//*[@id="layer_planner"]/table/tbody/tr[3]/td').text
                 }
                 meeting_info_list.append(meeting_info)
     
                 li.find_element(By.XPATH,'//*[@id="layer_planner"]/button').click()
         else:
             #예약이 없을 때
-            print('no data')
-            print('\n- - - - - - - - - - - - - - - - - - - - - - - - - -\n')
             meeting_info = {
                 "name" : room,
                 "order" : 0,
@@ -101,5 +91,5 @@ if __name__ == '__main__':
     day_index = 5
     ID = input("ID: ")
     PW = input("PW: ")
-    get_tableList(ID,PW,week_index,day_index,{'동아리실A':'14676'})
+    print(get_tableList(ID,PW,week_index,day_index,{'동아리실A':'14676'}))
     
