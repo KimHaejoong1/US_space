@@ -38,8 +38,6 @@ def get_tableList(ID,PW,week,day,space):
         except NoSuchElementException:
             table_list = None
 
-        print(room,end="\n\n")
-
         if table_list is not None:
             #예약이 있을때
             lis_count = len(table_list.find_elements(By.TAG_NAME, 'li'))
@@ -92,4 +90,3 @@ if __name__ == '__main__':
     ID = input("ID: ")
     PW = input("PW: ")
     print(get_tableList(ID,PW,week_index,day_index,{'동아리실A':'14676'}))
-    
