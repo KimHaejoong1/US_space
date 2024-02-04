@@ -1,5 +1,6 @@
 from tableList import get_tableList
 from cal import get_index
+from noticeCSE import get_CSE_notice
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from json import dumps
@@ -29,14 +30,21 @@ def get_json(id: str,pw: str):
     return list_data
 
 if __name__ == '__main__':
-    loc = {'동아리실A':'14676',
-           '동아리실B':'14677',
-           '회의실A':'14678',
-           '회의실B':'49497'}
-    ID = input("ID: ")
-    PW = input("PW: ")
-    week_index, day_index = get_index()
-    list_data = get_tableList(ID,PW,week_index,day_index,loc)
-    json_data = dumps(list_data, indent=4,ensure_ascii=False)
-    with open('USspace.json','w',encoding='utf-8') as file:
-        file.write(json_data)
+    choice = int(input("1 예약현황 불러오기\n2 학과 공지사항 불러오기\n: "))
+    if choice == 1:
+        loc = {'동아리실A':'14676',
+               '동아리실B':'14677',
+                '회의실A':'14678',
+                '회의실B':'49497'}
+        ID = input("ID: ")
+        PW = input("PW: ")
+        week_index, day_index = get_index()
+        list_data = get_tableList(ID,PW,week_index,day_index,loc)
+        json_data = dumps(list_data, indent=4,ensure_ascii=False)
+        with open('USspace.json','w',encoding='utf-8') as file:
+            file.write(json_data)
+    elif choice == 2:
+        notice_data = get_CSE_notice()
+        json_data = dumps(notice_data, indent=4,ensure_ascii=False)
+        with open('noticeCSE.json','w',encoding='utf-8') as file:
+            file.write(str(json_data))
