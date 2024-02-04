@@ -1,6 +1,7 @@
 from tableList import get_tableList
 from cal import get_index
 from noticeCSE import get_CSE_notice
+from noticeSELON import get_SELON_notice
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from json import dumps
@@ -16,7 +17,7 @@ app.add_middleware(
 )
 
 @app.get("/USspace/")
-def get_json(id: str,pw: str):
+def get_meeting_info(id: str,pw: str):
     loc = {'동아리실A':'14676',
            '동아리실B':'14677',
            '회의실A':'14678',
@@ -38,8 +39,17 @@ def get_CSE():
     
     return CSE_data
 
+@app.get("/SELON/")
+def get_SELON():
+    try:
+        SELON_data = get_SELON_notice()
+    except HTTPException as e:
+        raise HTTPException(status_code=500,detail=str(e))
+    
+    return SELON_data
+
 if __name__ == '__main__':
-    choice = int(input("1 예약현황 불러오기\n2 학과 공지사항 불러오기\n: "))
+    choice = int(input("1 예약현황 불러오기\n2 학과 공지사항 불러오기\n3 학생회 공지사항 불러오기\n: "))
     if choice == 1:
         loc = {'동아리실A':'14676',
                '동아리실B':'14677',
@@ -56,4 +66,9 @@ if __name__ == '__main__':
         notice_data = get_CSE_notice()
         json_data = dumps(notice_data, indent=4,ensure_ascii=False)
         with open('noticeCSE.json','w',encoding='utf-8') as file:
+            file.write(str(json_data))
+    elif choice == 3:
+        notice_data = get_SELON_notice()
+        json_data = json_data = dumps(notice_data, indent=4,ensure_ascii=False)
+        with open('noticeSELON.json','w',encoding='utf-8') as file:
             file.write(str(json_data))
