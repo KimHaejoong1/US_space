@@ -15,7 +15,7 @@ app.add_middleware(
     allow_headers=["*"],  # 모든 HTTP 헤더를 허용합니다.
 )
 
-@app.get("/")
+@app.get("/USspace/")
 def get_json(id: str,pw: str):
     loc = {'동아리실A':'14676',
            '동아리실B':'14677',
@@ -28,6 +28,15 @@ def get_json(id: str,pw: str):
         raise HTTPException(status_code=500,detail=str(e))
     
     return list_data
+
+@app.get("/CSE/")
+def get_CSE():
+    try:
+        CSE_data = get_CSE_notice()
+    except HTTPException as e:
+        raise HTTPException(status_code=500,detail=str(e))
+    
+    return CSE_data
 
 if __name__ == '__main__':
     choice = int(input("1 예약현황 불러오기\n2 학과 공지사항 불러오기\n: "))
