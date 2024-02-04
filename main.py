@@ -60,7 +60,7 @@ if __name__ == '__main__':
         week_index, day_index = get_index()
         list_data = get_tableList(ID,PW,week_index,day_index,loc)
         json_data = dumps(list_data, indent=4,ensure_ascii=False)
-        with open('USspace.json','w',encoding='utf-8') as file:
+        with open('meetingInfo.json','w',encoding='utf-8') as file:
             file.write(json_data)
     elif choice == 2:
         notice_data = get_CSE_notice()
