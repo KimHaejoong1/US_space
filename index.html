@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="test.css">
+  <title>us_space</title>
+  <script src="test.js"></script>
+  <style>
+    
+  </style>
+</head>
+
+<body>
+    <div>
+    <!-- left -->
+    <div id = "left_part">
+        <div class="left_div">
+            <h3 class = "left_title">시설물 이용 수칙</h3>
+            <div class = "left_content">
+                <ul class = "left_text">
+                    <li>학과 홈페이지 > 로그인 > 회원가입 > 시설물대여</li>
+                    <li>한 명당 2시간의 예약 제한이 있습니다.</li>
+                    <li>창의마루 시설물 대여시에 학생회실에서 표 작성 후 카드키를 빌려주세요</li>
+                    <li>개인 물품 보관을 금지합니다.</li>
+                    <li>비품이 없을 경우 학생회실로 문의 부탁드립니다.</li>
+                </ul>
+            </div>
+        </div>
+        <hr class="left_hr">
+            <!-- 
+                수정했습니다
+            기존 ul태그 밑의 li태그를 모두 지운 후, js에서 관리하도록 수정
+            -->
+
+        <div class="left_div">
+            <h3 class = "left_title">학과 공지사항</h3>
+            <div class = "left_content">
+                <ul class = "left_text" id="notice_cse">
+                    
+                </ul>
+            </div>
+        </div>
+        <hr class="left_hr">
+        <div class="left_div">
+            <h3 class = "left_title">학생회 공지사항</h3>
+            <div class = "left_content">
+                <ul class = "left_text", id="notice_selon">
+                    
+                </ul>
+            </div>
+        </div>
+            <!-- 
+                수정했습니다
+            기존 ul태그 밑의 li태그를 모두 지운 후, js에서 관리하도록 수정
+            -->
+    </div>
+    <!-- right -->
+    <div id = "right_part">
+        <div id="clock">
+            <h1 id="clock_time"></h1>
+        </div>
+        <div> </div>
+        <table>
+            <tr>
+                <th class = "timeline"></th>
+                <th colspan='2' class="location">4층 창업지원실습실</th>
+                <th colspan='2' class="location">2층 창의마루</th>
+            </tr>
+            <tr id="facility">
+                <td></td>
+                <td>
+                    <div class="facility_name">동아리방A</div> 
+                    <div class="facility_info">(최대 8인)</div>
+                </td>
+                <td>
+                    <div class="facility_name">동아리방B</div> 
+                    <div class="facility_info">(최대 6인)</div>
+                </td>
+                <td>
+                    <div class="facility_name">회의실A</div> 
+                    <div class="facility_info">(최대 7인)</div>
+                </td>
+                <td> 
+                    <div class="facility_name">회의실B</div> 
+                    <div class="facility_info">(최대 5인)</div>
+                </td>
+            </tr>
+
+            <!-- 
+                
+                수정했습니다
+                class를 js로 추가해서 만든 css에 설정하도록 수정
+                id값을 추가하여 js에서 해당 div태그를 인식하도록 수정
+            
+            -->
+            <tr style="padding : 0">
+                <td></td>
+                <td>
+                    <div class = "state" id="state_roomA"></div>
+                </td>
+                <td>
+                    <div class = "state" id="state_roomB"></div>
+                </td>
+                <td>
+                    <div class = "state" id="state_meeting_roomA"></div>
+                </td>
+                <td>
+                    <div class = "state" id="state_meeting_roomB"></div>
+                </td>
+            </tr>
+            <!-- 
+                
+                수정했습니다
+                class를 js로 추가해서 만든 css에 설정하도록 수정
+                id값을 추가하여 js에서 해당 div태그를 인식하도록 수정
+            
+            -->
+
+            <tr>
+                <td class="hour">9</td>
+                <!-- 예약 정보 -->
+                <td rowspan='15' class="time_table" id="roomA"> 
+                    <!-- 동아리방A -->
+                    <div>
+                        <div id="h9" class="time_division" style="top : 0px; "></div>
+                        <div id="h10" class="time_division" style="top : 36px;"></div>
+                        <div id="h11" class="time_division" style="top : 72px;"></div>
+                        <div id="h12" class="time_division" style="top : 108px;"></div>
+                        <div id="h13" class="time_division" style="top : 144px;"></div>
+                        <div id="h14" class="time_division" style="top : 180px;"></div>
+                        <div id="h15" class="time_division" style="top : 216px;"></div>
+                        <div id="h16" class="time_division" style="top : 252px;"></div>
+                        <div id="h17" class="time_division" style="top : 288px;"></div>
+                        <div id="h18" class="time_division" style="top : 324px;"></div>
+                        <div id="h19" class="time_division" style="top : 360px;"></div>
+                        <div id="h20" class="time_division" style="top : 396px;"></div>
+                        <div id="h21" class="time_division" style="top : 432px;"></div>
+                        <div id="h22" class="time_division" style="top : 468px;"></div>
+                        <div id="h23" class="time_division" style="top : 504px;"></div>
+                    </div>
+                    <!-- <div>
+                        <div class = "reserv_element_deco" style="top : 360px; height : 36px; background: #1BA1EB;"></div>
+                        <div class = "reserv_element" style="top : 360px; height : 36px; background: #F1FBFF;">
+                            제목 : blue 시간 :1hour <br>
+                            내용 : 내용까지 들어가겠는데
+                        </div>
+                    </div> -->
+                </td>
+                <td rowspan='15' class="time_table" id="roomB">
+                    <!-- 동아리방B -->
+                    <!-- <div>
+                        <div class = "reserv_element_deco" style="top : 36px; height : 72px; background:#20CA9A;"></div>
+                        <div class = "reserv_element" style="top : 36px; height : 72px; background: #F5FFFC;">
+                            제목 : Green 시간 : 2hours<br>
+                            내용 : overflow_hidden 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람대한으로 길이 보전하세
+                            남산 위에 저 소나무 철갑을 두른듯 바람서리 불변함은 우리 기상일세
+                        </div>
+                    </div> -->
+                </td>
+                <td rowspan='15' class="time_table" id="meeting_roomA">
+                    <!-- 회의실A -->
+                    <!-- <div>
+                        <div class = "reserv_element_deco" style="top : 504px; height : 18px; background:#8488FF;"></div>
+                        <div class = "reserv_element" style="top : 504px; height : 18px; background: #f3f3ff;">
+                            제목 : Purple 시간 : 30min
+                        </div>
+                    </div> -->
+                </td>
+                <td rowspan='15' class="time_table" id="meeting_roomB">
+                    <!-- 회의실B -->
+                    <!-- <div>
+                        <div class = "reserv_element_deco" style="top : 430px; height : 72px; background:#8488FF;"></div>
+                        <div class = "reserv_element" style="top : 430px; height : 72px; background: #f3f3ff;">
+                            Purple 30min
+                        </div>
+                    </div> -->
+                    <!-- <div>
+                        <div class = "reserv_element_deco" style="top : 424px; height : 36px; background:#F3557C; z-index:2"></div>
+                        <div class = "reserv_element" style="top : 424px; height : 36px; background: #FFEEEF; z-index:2;">
+                            Red1 overlap :
+                            "Purple"과 시간이 겹쳤습니다 다시 예약해주세요
+                        </div>
+                    </div> -->
+                    <!-- <div>
+                        <div class = "reserv_element_deco" style="top : 0px; height : 108px; background:#F3557C; z-index:2"></div>
+                        <div class = "reserv_element" style="top : 0px; height : 108px; background: #FFEEEF; z-index:2;">
+                            Red2 too long <br>
+                            제목 : Red2 시간 : 3시간<br>
+                            2시간 이상 예약하셨습니다. 다시 예약해주세요
+                            
+                        </div>
+                    </div> -->
+                    
+                </td>
+            </tr>
+            <!-- timeline -->
+            <tr>
+                <td class="hour">10</td>
+            </tr>
+            <tr>
+                <td class="hour">11</td>
+            </tr>
+            <tr>
+                <td class="hour">12</td>
+            </tr>
+            <tr>
+                <td class="hour">13</td>
+            </tr>
+            <tr>
+                <td class="hour">14</td>
+            </tr>
+            <tr>
+                <td class="hour">15</td>
+            </tr>
+            <tr>
+                <td class="hour">16</td>
+            </tr>
+            <tr>
+                <td class="hour">17</td>
+            </tr>
+            <tr>
+                <td class="hour">18</td>
+            </tr>
+            <tr>
+                <td class="hour">19</td>
+            </tr>
+            <tr>
+                <td class="hour">20</td>
+            </tr>
+            <tr>
+                <td class="hour">21</td>
+            </tr>
+            <tr>
+                <td class="hour">22</td>
+            </tr>
+            <tr>
+                <td class="hour">23</td>
+            </tr>
+    
+          </table>
+
+    </div>
+    </div>
+    <footer>
+        <div class="footer_font">세론사진x언톡사진 us_space </div>
+    </footer>
+</body>
+</html>
+
+
