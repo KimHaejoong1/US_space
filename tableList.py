@@ -12,8 +12,7 @@ def get_tableList(ID,PW,week,day,space):
     #usb_descriptir error 해결
     options = webdriver.ChromeOptions()
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
-    #창 자동 꺼짐 방지
-    options.add_experimental_option("detach", True)
+
     #크롬 드라이버 생성
     driver = webdriver.Chrome(options=options)
     driver.implicitly_wait(3)
