@@ -60,9 +60,7 @@
 
 #### Framework
 
-<img src="https://img.shields.io/badge/fastapi-009688?style=for-the-badge&logo=fastapi&logoColor=white">
-
----
+## <img src="https://img.shields.io/badge/fastapi-009688?style=for-the-badge&logo=fastapi&logoColor=white">
 
 ## 🖥️화면 구성
 
