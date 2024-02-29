@@ -1,76 +1,8 @@
-// async function fetchApiData() {
-//     const apiUrl = 'USspace.json';
-    
-//     try {
-//         const response = await fetch(apiUrl);
-//         const data = await response.json();
-//         document.querySelectorAll('.reservation_element').forEach(el => el.remove());
-
-        
-//         insertDataIntoHTML(data)
-//         // Insert data into HTML
-       
-//     } catch (error) {
-//         console.error('Fetching API data failed:', error);
-//         document.getElementsByClassName('reservation_element').innerText = 'Error loading API data.';
-//     }
-// }
-// function createReservationElement(reservation) {
-//     return `
-//     <div class="reservation_element" id="${reservation.order}">
-//         <p><strong>Name:</strong> ${reservation.name}</p>
-//         <p><strong>Order:</strong> ${reservation.order}</p>
-//         <p><strong>Title:</strong> ${reservation.title}</p>
-//         <p><strong>StartTime:</strong> ${reservation.startTime}</p>
-//         <p><strong>EndTime:</strong> ${reservation.endTime}</p>
-//         <p><strong>Content:</strong> ${reservation.content}</p>
-//     </div>
-// `;
-// }
-// function insertDataIntoHTML(data) {
-//     data.forEach(reservation => {
-//         const elementId = reservation.name.toLowerCase().replace(/\s+/g, '');
-//         const reservationElement = createReservationElement(reservation);
-//         document.getElementById(elementId).innerHTML += reservationElement;
-//     });
-// }
-
-
-// function reloadData() {
-//     // 예약 정보를 받아올 API 또는 데이터 소스의 URL
-//     const dataURL = "your_data_api_url_here";
-
-//     // AJAX 또는 Fetch를 사용하여 데이터를 가져오는 비동기 요청
-//     fetch(dataURL)
-//         .then(response => response.json())
-//         .then(data => {
-//             // 기존에 생성된 div 태그 삭제
-//             document.querySelectorAll('.reservation_element').forEach(el => el.remove());
-//             // 새로운 데이터로 HTML 업데이트
-//             insertDataIntoHTML(data);
-//         })
-//         .catch(error => console.error('Error fetching data:', error));
-// }
-// initialData = [
-   
-// ]
-// insertDataIntoHTML(initialData);
-
-// // 30초마다 데이터 리로딩
-// setInterval(reloadData, 30000);
-
-// // 페이지가 로드될 때 API 데이터를 가져오고, 5초마다 반복하여 실행합니다.
-// // window.onload = function() {
-// //     fetchApiData();
-// //     setInterval(fetchApiData, 30000); // 5초(5000밀리초)마다 fetchApiData를 실행합니다.
-// // };
+const colorRotation = ['#f3f3ff', '#F5FFFC']; // Define your color rotation
+const colorRotation_deco = ['#8488FF', '#20CA9A']; // Define your color rotation
 
 document.addEventListener('DOMContentLoaded', function() {
-    function fetch_data() {
-        const colorRotation = ['#f3f3ff', '#F5FFFC']; // Define your color rotation
-        const colorRotation_deco = ['#8488FF', '#20CA9A']; // Define your color rotation
-    
-        // Fetch data from the JSON file (Assuming you are using fetch API)
+    function get_reserv_element() {
         fetch('USspace.json')
             .then(response => response.json())
             .then(data => {
@@ -82,17 +14,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (item.order !== 0) {
                         const roomID = getRoomID(item.name);
                         // const reservationElementCount = document.querySelectorAll(`#${roomID} .reservation_element`).length + 1;
-                        const startTime = item.startTime;
-                        const start_hour = parseInt(startTime.substr(0, 2));
-                        const start_min = parseInt(startTime.substr(3, 5));
-                        const endTime = item.endTime;
+                        const res_startTime = item.startTime;
+                        const res_start_hour = parseInt(res_startTime.substr(0, 2));
+                        const res_start_min = parseInt(res_startTime.substr(3, 5));
+                        const res_endTime = item.endTime;
 
-                        const start = new Date(`2024-11-01T${startTime}`);
-                        const end = new Date(`2024-11-01T${endTime}`);
+                        const start = new Date(`2024-11-01T${res_startTime}`);
+                        const end = new Date(`2024-11-01T${res_endTime}`);
                         const diffInMinutes = (end - start) / (1000 * 60);
 
                         const height = diffInMinutes * (3/5);
-                        const top = (start_hour - 9) * (36) + start_min * (3/5);
+                        const top = (res_start_hour - 9) * (36) + res_start_min * (3/5);
     
                         // Determine color based on the color rotation array
                         const color = colorRotation[index % colorRotation.length];
@@ -147,8 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function getRoomID(roomName) {
         // Map room names to corresponding IDs
         const roomMap = {
-            '동아리방A': 'roomA',
-            '동아리방B': 'roomB',
+            '동아리실A': 'roomA',
+            '동아리실B': 'roomB',
             '회의실A': 'meeting_roomA',
             '회의실B': 'meeting_roomB'
         };
@@ -175,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const minutes = today.getMinutes();
         const seconds = today.getSeconds();
 
-        // Format the time as HH:MM:SS
+     
         const time = `${year}.${month < 10 ? '0' : ''}${month}.${date < 10 ? '0' : ''}${date} ${hours < 10 ? '0' : ''}(${weeks[week]}) ${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
         // 현재 시각 update
@@ -184,19 +116,37 @@ document.addEventListener('DOMContentLoaded', function() {
             now_time.innerText = `${time}`;
             
         }
+        hour_bg_color(hours)
 
-        // 현재 시각의 row에 bg color 지정하기
-        const now_color = document.getElementById(`h${hours}`);
-        if (now_color) {
-            now_color.style.backgroundColor = 'rgba(233, 181, 255, 0.271';
-        }
+        return today;
         
-   
     }
-    function Reservation_available() {
-        const now = new Date();
+
+    // 현재 시각의 row에 bg color 지정하기
+    function hour_bg_color(hours) {
+        var time_bg_color = document.getElementsByClassName('time_division');
+
+        // 선택된 모든 요소를 순회하면서 배경색을 red로 변경합니다.
+        for(var i = 0; i < time_bg_color.length; i++) {
+            time_bg_color[i].style.backgroundColor = '';
+        }   
         
-        // Fetch data from the JSON file (Assuming you are using fetch API)
+        const now_bg_color = document.getElementById(`h${hours}`);
+        if (hours == parseInt(now_bg_color.id.slice(1))) {
+            now_bg_color.style.backgroundColor = 'rgba(233, 181, 255, 0.271)';
+        }
+    }
+
+    // 시간이 겹칠 때
+    function overlab_time() {
+// start Time, end Time 1
+// start Time, end Time 2
+// 겹치면 - > order가 더 큰 것을 빨간색으로 변하게 만들기 content : 
+
+    }
+    // 현재 시각을 바탕으로 사용가능한지 예약중인지 판단
+    function Reservation_available() {
+        // const now = new Date();
         fetch('USspace.json')
             .then(response => response.json())
             .then(data => {
@@ -205,43 +155,51 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         console.log(index)
                         const roomID = getRoomID(item.name);
+                        const today = new Date();
                         if (item.order !== 0) {
-                            
-                            const today = new Date();
                             const startDateTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), parseInt(item.startTime.substr(0, 2)), parseInt(item.startTime.substr(3, 5)));
                             const endDateTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), parseInt(item.endTime.substr(0, 2)), parseInt(item.endTime.substr(3, 5))); 
+                            console.log(today);
+                            console.log(startDateTime);
+                            console.log(endDateTime);
                             // Check if the current time is within the reservation period
-                            if (now >= startDateTime && now <= endDateTime) {
-                                // The room is currently in use
-                                console.log(`1 Room ${item.name} is currently in use.`);
-                                stateCSS(`state_${roomID}`, 'occupied');
-
+                            if (today >= startDateTime && today <= endDateTime) {
+                                console.log(`case1 : Room ${item.name} is currently in use.`);
+                                stateCSS(`state_${roomID}`, "occupied", today, startDateTime, endDateTime);
                             } else {
-                                // The room is available for reservation
-                                console.log(`2 Room ${item.name} is available for reservation.`);
-                                stateCSS(`state_${roomID}`, 'available');
+                                
+                                console.log(`case2 : Room ${item.name} is available for reservation.`);
+                                stateCSS(`state_${roomID}`, 'available', today, startDateTime, endDateTime);
                             }
+                            if ( 0 < today - endDateTime && today - endDateTime < 6000) {
+                                
+                                setTimeout(function(){
+                                    location.reload(true);
+                                    console.log("시간이 같아요");
+                                }, 3000);
+                            }
+                            console.log(today - endDateTime);
                         }
                         else {
-                            console.log(`3 Room ${item.name} is available for reservation.`);
-                            stateCSS(`state_${roomID}`, 'available');
+                            console.log(`case3 : Room ${item.name} is available for reservation.`);
+                            stateCSS(`state_${roomID}`, 'available', today);
                         }
+                        
                     }
                     catch(err) {
                         console.log(err)
-                    }
-                
-                    
+                    }  
                 });
             })
             .catch(error => console.error('Error fetching data:', error));
     }
-    function stateCSS(id, status) {
+    // 사용중과 예약가능 state의 css 선택
+    function stateCSS(id, status, today, startDateTime, endDateTime) {
         const element = document.getElementById(id);
-        const element_class = document.getElementById(id).className;
-        console.log(element_class);
+        const element_class = element.className;
+        console.log("element_class :", element_class);
         if (element_class !== "state occupied"){
-            if (status === 'occupied') {
+            if (status === "occupied") {
                 // Set styles for 'in-use'
                 console.log("occupied");
                 element.innerHTML = "사용중"
@@ -251,9 +209,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log("available");
                 element.innerHTML = "예약가능"
                 element.className = "state available";
-            }   
-            console.log(element);
+            }
         }
+        console.log(element);
     }
 
     function fecth_notice_cse() {
@@ -290,13 +248,13 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error('Error fetching data:', error));
     }
     // Initial load
-    fetch_data();
+    get_reserv_element();
     updateClock();
     Reservation_available();
     fecth_notice_cse();
     fecth_notice_selon();
 
-    setInterval(fetch_data, 600000);
-    setInterval(updateClock, 100);
+    setInterval(get_reserv_element, 600000);
+    setInterval(updateClock, 700);
     setInterval(Reservation_available, 5000);
 });
