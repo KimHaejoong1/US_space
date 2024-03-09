@@ -12,7 +12,8 @@ def get_tableList(ID,PW,week,day,space):
     #usb_descriptir error 해결
     options = webdriver.ChromeOptions()
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
-
+    #창 자동 꺼짐 방지
+    # options.add_experimental_option("detach", True)
     #크롬 드라이버 생성
     driver = webdriver.Chrome(options=options)
     driver.implicitly_wait(3)
@@ -64,7 +65,8 @@ def get_tableList(ID,PW,week,day,space):
                     "title" : driver.find_element(By.XPATH,'//*[@id="layer_planner"]/table/tbody/tr[1]/td').text,
                     "startTime" : liTime[:5],
                     "endTime" : liTime[8:],
-                    "content" : driver.find_element(By.XPATH,'//*[@id="layer_planner"]/table/tbody/tr[3]/td').text
+                    "content" : driver.find_element(By.XPATH,'//*[@id="layer_planner"]/table/tbody/tr[3]/td').text,
+                    "conflict" : 0
                 }
                 meeting_info_list.append(meeting_info)
     
@@ -77,15 +79,27 @@ def get_tableList(ID,PW,week,day,space):
                 "title" : 0,
                 "startTime" : 0,
                 "endTime" : 0,
-                "content" : 0
+                "content" : 0,
+                "conflict" : 0
             }
             meeting_info_list.append(meeting_info)
+
+    #겹친 일정 검사
+    for i in range(len(meeting_info_list)):
+        for j in range(i+1,len(meeting_info_list)):
+            if (meeting_info_list[i]["name"] == meeting_info_list[j]["name"]) and not(meeting_info_list[i]["endTime"]<meeting_info_list[j]["startTime"] or meeting_info_list[j]["endTime"] < meeting_info_list[i]["startTime"]):
+                if meeting_info_list[i]["order"] > meeting_info_list[j]["order"]:
+                    meeting_info_list[i]["conflict"] = 1
+                else:
+                    meeting_info_list[j]["conflict"] = 1
+            else:
+                pass
 
     return meeting_info_list
 
 if __name__ == '__main__':
-    week_index = 1
-    day_index = 5
+    week_index = 2
+    day_index = 7
     ID = input("ID: ")
     PW = input("PW: ")
     print(get_tableList(ID,PW,week_index,day_index,{'동아리실A':'14676'}))
