@@ -33,7 +33,37 @@ document.addEventListener("DOMContentLoaded", function () {
             // Create reservation element
             const reservationElementDeco = document.createElement("div");
             reservationElementDeco.classList.add("reservation_element_deco");
-            reservationElementDeco.style.cssText = `
+
+            const reservationElement = document.createElement("div");
+            reservationElement.classList.add("reservation_element");
+            reservationElement.id = item.order; // Use order as the id
+
+            if (item.conflict) {
+              reservationElementDeco.style.cssText = `
+                            left: 1%;
+                            width: 2%;
+                            position: absolute;
+                            border-radius: 4px 0px 0px 4px;
+                            top: ${top}px;
+                            height: ${height}px;
+                            background: #F3557C;
+                            z-index: 2;
+                        `;
+              reservationElement.style.cssText = `
+                            left: 3%;
+                            width: 97%;
+                            position: absolute;
+                            text-align: left;
+                            font-size: 13px;
+                            padding: 5px;
+                            overflow: hidden;
+                            top: ${top}px;
+                            height: ${height}px;
+                            background: #FFEEEF;
+                            z-index: 2;
+                        `;
+            } else {
+              reservationElementDeco.style.cssText = `
                             left: 1%;
                             width: 2%;
                             position: absolute;
@@ -42,11 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             height: ${height}px;
                             background: ${color_deco};
                         `;
-
-            const reservationElement = document.createElement("div");
-            reservationElement.classList.add("reservation_element");
-            reservationElement.id = item.order; // Use order as the id
-            reservationElement.style.cssText = `
+              reservationElement.style.cssText = `
                             left: 3%;
                             width: 97%;
                             position: absolute;
@@ -58,6 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             height: ${height}px;
                             background: ${color};
                         `;
+            }
 
             reservationElement.innerHTML = `
                             <p>${item.title}</p>
