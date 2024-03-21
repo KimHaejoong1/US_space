@@ -94,12 +94,15 @@ def get_tableList(ID,PW,week,day,space):
                     meeting_info_list[j]["conflict"] = 1
             else:
                 pass
+        if meeting_info_list[i]["startTime"] < "09:00":
+            meeting_info_list[i]["startTime"] = "09:00"
+        
 
     return meeting_info_list
 
 if __name__ == '__main__':
-    week_index = 2
-    day_index = 7
+    week_index = 4
+    day_index = 5
     ID = input("ID: ")
     PW = input("PW: ")
     print(get_tableList(ID,PW,week_index,day_index,{'동아리실A':'14676'}))
