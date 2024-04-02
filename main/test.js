@@ -1,10 +1,11 @@
 const colorRotation = ['#f3f3ff', '#F5FFFC']; // Define your color rotation
 const colorRotation_deco = ['#8488FF', '#20CA9A']; // Define your color rotation
-
+// "#FFEEEF"
+// "#F3557C"
 document.addEventListener('DOMContentLoaded', function() {
     function get_reserv_element() {
-        fetch('http://127.0.0.1:8000/USspace/?id=ID&pw=PW')
-            .then(response => response.json())
+        fetch('http://127.0.0.1:8000/USspace/?id=202355663&pw=**cse202355663')
+            .then(response => response.json())  
             .then(data => {
                 // Remove existing reservation elements
                 document.querySelectorAll('.reservation_element').forEach(el => el.remove());
@@ -37,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             const color_deco = colorRotation_deco[index % colorRotation.length];
                             
                             // Create reservation element
+                           // Create reservation element
                             const reservationElementDeco = document.createElement('div');
                             reservationElementDeco.classList.add('reservation_element_deco');
                             reservationElementDeco.style.cssText = `
@@ -46,7 +48,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                 border-radius: 4px 0px 0px 4px;
                                 top: ${top}px;
                                 height: ${height}px;
-                                background: ${color_deco};
+                                background: ${color_deco}; /* Conflict check */
+                                z-index: ${1}; /* Conflict check */
                             `;
                             const reservationElement = document.createElement('div');
                             reservationElement.classList.add('reservation_element');
@@ -61,14 +64,31 @@ document.addEventListener('DOMContentLoaded', function() {
                                 overflow: hidden;
                                 top: ${top}px;
                                 height: ${height}px;
-                                background: ${color};
+                                background: ${color}; /* Conflict check */
+                                z-index: ${1}; /* Conflict check */
                             `;
-        
+
+                            
+                           // 예약 정보 작성
+                         
                             reservationElement.innerHTML = `
-                                <p>${item.title}</p>
-                                <p>${item.startTime} ~ ${item.endTime}</p>
-                                <p>${item.content}</p>
+                                ${diffInMinutes <= 60 ?
+                                    `<p class="roboto-thin">${item.title.length > 12 ? item.title.slice(0, 12) + '...' : item.title} - ${item.startTime} ~ ${item.endTime}</p>` :
+                                    diffInMinutes <= 90 ?
+                                        `<p class="roboto-thin">${item.title.length > 12 ? item.title.slice(0, 12) + '...' : item.title} - ${item.startTime} ~ ${item.endTime}</p>` :
+                                        `<p class="roboto-thin">${item.title}</p>
+                                        <p>${item.startTime} ~ ${item.endTime}</p>`
+                                }
+                                ${diffInMinutes > 60 ? `<p class="roboto-thin">${item.content.length > 20 ? item.content.slice(0, 20) + '...' : item.content}</p>` : ''}
                             `;
+                            
+
+                       
+                       
+
+
+
+                        
         
                             // Append reservation element to the room
                             document.getElementById(roomID).appendChild(reservationElement);
@@ -190,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function fecth_notice_cse() {
-        fetch('noticeCSE.json')
+        fetch('http://127.0.0.1:8000/CSE/')
             .then(response => response.json())
             .then(data => {
                 const noticeList = document.getElementById('notice_cse');
