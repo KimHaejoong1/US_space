@@ -201,6 +201,9 @@ p {
     line-height: 1px;
     font-size: 16px;
 }
+#us_space_rule li {
+    font-size: 15px;
+}
 #notice_cse li {
     font-size: 15px;
 }
